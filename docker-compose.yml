@@ -1,0 +1,20 @@
+﻿version: "3.9"
+services:
+  py-forecast:
+    build: ./py-forecast
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./py-forecast/models:/app/models
+  java-backend:
+    image: maven:3.9.6-eclipse-temurin-17
+    working_dir: /app
+    command: mvn spring-boot:run
+    environment:
+      SPRING_APPLICATION_JSON: '{"predictor":{"base-url":"http://py-forecast:8000"}}'
+    volumes:
+      - ./java-backend:/app
+    depends_on:
+      - py-forecast
+    ports:
+      - "8080:8080"

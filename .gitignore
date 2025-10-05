@@ -1,0 +1,20 @@
+﻿# Maven
+java-backend/target/
+*.iml
+.idea/
+.classpath
+.project
+.settings/
+
+# Python
+py-forecast/.venv/
+__pycache__/
+*.pyc
+py-forecast/models/*.pkl
+
+# General
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+coverage/

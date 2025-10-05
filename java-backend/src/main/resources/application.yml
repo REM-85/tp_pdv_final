@@ -1,0 +1,32 @@
+﻿spring:
+  datasource:
+    url: jdbc:h2:mem:reservas;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8080
+predictor:
+  base-url: http://localhost:8000
+logging:
+  level:
+    root: INFO
+    com.ucaba.reservas: DEBUG
+reservas:
+  correlation-header: X-Correlation-Id
+  forecast:
+    default-horizon-days: 14
+    max-horizon-days: 60
