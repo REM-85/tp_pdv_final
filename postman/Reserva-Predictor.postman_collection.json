@@ -1,320 +1,521 @@
-﻿{
-    "info":  {
-                 "name":  "Reserva Predictor MVP",
-                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-                 "description":  "Flujo de CRUD + forecast"
-             },
-    "item":  [
-                 {
-                     "name":  "Health Predictor",
-                     "request":  {
-                                     "method":  "GET",
-                                     "header":  [
-
-                                                ],
-                                     "url":  {
-                                                 "raw":  "{{predictor_url}}/health",
-                                                 "host":  [
-                                                              "{{predictor_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "health"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Listar Personas",
-                     "request":  {
-                                     "method":  "GET",
-                                     "header":  [
-
-                                                ],
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/persons",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "persons"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Listar Salas",
-                     "request":  {
-                                     "method":  "GET",
-                                     "header":  [
-
-                                                ],
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/rooms",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "rooms"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Listar Articulos",
-                     "request":  {
-                                     "method":  "GET",
-                                     "header":  [
-
-                                                ],
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/items",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "items"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Listar Reservas",
-                     "request":  {
-                                     "method":  "GET",
-                                     "header":  [
-
-                                                ],
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/reservations",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "reservations"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Crear Persona",
-                     "request":  {
-                                     "method":  "POST",
-                                     "header":  [
-                                                    {
-                                                        "key":  "Content-Type",
-                                                        "value":  "application/json"
-                                                    }
-                                                ],
-                                     "body":  {
-                                                  "mode":  "raw",
-                                                  "raw":  "{\n  \"fullName\": \"Usuarix Demo\",\n  \"email\": \"demo@ucaba.com\",\n  \"role\": \"STAFF\"\n}"
-                                              },
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/persons",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "persons"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Crear Sala",
-                     "request":  {
-                                     "method":  "POST",
-                                     "header":  [
-                                                    {
-                                                        "key":  "Content-Type",
-                                                        "value":  "application/json"
-                                                    }
-                                                ],
-                                     "body":  {
-                                                  "mode":  "raw",
-                                                  "raw":  "{\n  \"name\": \"Sala Demo\",\n  \"capacity\": 8\n}"
-                                              },
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/rooms",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "rooms"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Crear Reserva",
-                     "request":  {
-                                     "method":  "POST",
-                                     "header":  [
-                                                    {
-                                                        "key":  "Content-Type",
-                                                        "value":  "application/json"
-                                                    }
-                                                ],
-                                     "body":  {
-                                                  "mode":  "raw",
-                                                  "raw":  "{\n  \"personId\": 1,\n  \"roomId\": 1,\n  \"startDateTime\": \"2025-09-15T10:00:00\",\n  \"endDateTime\": \"2025-09-15T11:00:00\"\n}"
-                                              },
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/reservations",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "reservations"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Disponibilidad",
-                     "request":  {
-                                     "method":  "GET",
-                                     "header":  [
-
-                                                ],
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/reservations/availability?resourceType=ROOM\u0026resourceId=1\u0026start=2025-09-15T10:00:00\u0026end=2025-09-15T11:00:00",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "reservations",
-                                                              "availability"
-                                                          ],
-                                                 "query":  [
-                                                               {
-                                                                   "key":  "resourceType",
-                                                                   "value":  "ROOM"
-                                                               },
-                                                               {
-                                                                   "key":  "resourceId",
-                                                                   "value":  "1"
-                                                               },
-                                                               {
-                                                                   "key":  "start",
-                                                                   "value":  "2025-09-15T10:00:00"
-                                                               },
-                                                               {
-                                                                   "key":  "end",
-                                                                   "value":  "2025-09-15T11:00:00"
-                                                               }
-                                                           ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Historial",
-                     "request":  {
-                                     "method":  "GET",
-                                     "header":  [
-
-                                                ],
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/reservations/history?resourceType=ROOM\u0026resourceId=1\u0026startDate=2025-07-01\u0026endDate=2025-09-30",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "reservations",
-                                                              "history"
-                                                          ],
-                                                 "query":  [
-                                                               {
-                                                                   "key":  "resourceType",
-                                                                   "value":  "ROOM"
-                                                               },
-                                                               {
-                                                                   "key":  "resourceId",
-                                                                   "value":  "1"
-                                                               },
-                                                               {
-                                                                   "key":  "startDate",
-                                                                   "value":  "2025-07-01"
-                                                               },
-                                                               {
-                                                                   "key":  "endDate",
-                                                                   "value":  "2025-09-30"
-                                                               }
-                                                           ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Entrenar Predictor",
-                     "request":  {
-                                     "method":  "POST",
-                                     "header":  [
-                                                    {
-                                                        "key":  "Content-Type",
-                                                        "value":  "application/json"
-                                                    }
-                                                ],
-                                     "body":  {
-                                                  "mode":  "raw",
-                                                  "raw":  "{\n  \"resourceType\": \"ROOM\",\n  \"resourceId\": 1\n}"
-                                              },
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/forecast/train",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "forecast",
-                                                              "train"
-                                                          ]
-                                             }
-                                 }
-                 },
-                 {
-                     "name":  "Pronostico",
-                     "request":  {
-                                     "method":  "POST",
-                                     "header":  [
-                                                    {
-                                                        "key":  "Content-Type",
-                                                        "value":  "application/json"
-                                                    }
-                                                ],
-                                     "body":  {
-                                                  "mode":  "raw",
-                                                  "raw":  "{\n  \"resourceType\": \"ROOM\",\n  \"resourceId\": 1,\n  \"horizonDays\": 14\n}"
-                                              },
-                                     "url":  {
-                                                 "raw":  "{{java_url}}/api/forecast",
-                                                 "host":  [
-                                                              "{{java_url}}"
-                                                          ],
-                                                 "path":  [
-                                                              "api",
-                                                              "forecast"
-                                                          ]
-                                             }
-                                 }
-                 }
-             ],
-    "variable":  [
-                     {
-                         "key":  "java_url",
-                         "value":  "http://localhost:8080"
-                     },
-                     {
-                         "key":  "predictor_url",
-                         "value":  "http://localhost:8000"
-                     }
-                 ]
+{
+    "info": {
+        "name": "Reserva Predictor MVP",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": "Flujo de CRUD + forecast para el backend Java y pruebas completas del predictor Python."
+    },
+    "item": [
+        {
+            "name": "Health Predictor",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{predictor_url}}/health",
+                    "host": [
+                        "{{predictor_url}}"
+                    ],
+                    "path": [
+                        "health"
+                    ]
+                },
+                "description": "Verifica que el microservicio de predicciones esté en línea."
+            },
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "pm.test(\"Servicio responde 200\", function () {",
+                            "            pm.response.to.have.status(200);",
+                            "        });",
+                            "        const json = pm.response.json();",
+                            "        pm.test(\"Respuesta de salud válida\", function () {",
+                            "            pm.expect(json.status).to.eql(\"ok\");",
+                            "            pm.expect(json.detail.toLowerCase()).to.include(\"predictor\");",
+                            "        });"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Entrenar Predictor Python",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "X-Correlation-Id",
+                        "value": "postman-train-001"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"series_id\": \"{{predictor_series_id}}\",\n  \"data\": [\n    {\"date\": \"2024-01-01\", \"y\": 15},\n    {\"date\": \"2024-01-02\", \"y\": 16},\n    {\"date\": \"2024-01-03\", \"y\": 17},\n    {\"date\": \"2024-01-04\", \"y\": 16},\n    {\"date\": \"2024-01-05\", \"y\": 18},\n    {\"date\": \"2024-01-06\", \"y\": 19},\n    {\"date\": \"2024-01-07\", \"y\": 18},\n    {\"date\": \"2024-01-08\", \"y\": 20},\n    {\"date\": \"2024-01-09\", \"y\": 21},\n    {\"date\": \"2024-01-10\", \"y\": 19},\n    {\"date\": \"2024-01-11\", \"y\": 18},\n    {\"date\": \"2024-01-12\", \"y\": 20}\n  ]\n}"
+                },
+                "url": {
+                    "raw": "{{predictor_url}}/train",
+                    "host": [
+                        "{{predictor_url}}"
+                    ],
+                    "path": [
+                        "train"
+                    ]
+                },
+                "description": "Entrena la serie de ejemplo en el microservicio Python."
+            },
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "pm.test(\"Entrenamiento aceptado\", function () {",
+                            "            pm.response.to.have.status(202);",
+                            "        });",
+                            "        const json = pm.response.json();",
+                            "        pm.test(\"Modelo entrenado reportado\", function () {",
+                            "            pm.expect(json).to.have.property('model_type');",
+                            "            pm.expect(['baseline', 'sarimax']).to.include(json.model_type);",
+                            "        });",
+                            "        pm.test(\"Se retornan métricas\", function () {",
+                            "            pm.expect(json.metrics).to.be.an('object');",
+                            "            pm.expect(json.metrics).to.have.property('mape');",
+                            "            pm.expect(json.metrics).to.have.property('smape');",
+                            "        });",
+                            "        pm.collectionVariables.set('predictor_series_id', json.series_id);"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Entrenamiento con datos repetidos",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"series_id\": \"{{predictor_series_id}}-duplicada\",\n  \"data\": [\n    {\"date\": \"2024-02-01\", \"y\": 10},\n    {\"date\": \"2024-02-01\", \"y\": 12},\n    {\"date\": \"2024-02-02\", \"y\": 11},\n    {\"date\": \"2024-02-03\", \"y\": 13},\n    {\"date\": \"2024-02-04\", \"y\": 14},\n    {\"date\": \"2024-02-05\", \"y\": 15},\n    {\"date\": \"2024-02-06\", \"y\": 16},\n    {\"date\": \"2024-02-07\", \"y\": 17},\n    {\"date\": \"2024-02-08\", \"y\": 18},\n    {\"date\": \"2024-02-09\", \"y\": 19}\n  ]\n}"
+                },
+                "url": {
+                    "raw": "{{predictor_url}}/train",
+                    "host": [
+                        "{{predictor_url}}"
+                    ],
+                    "path": [
+                        "train"
+                    ]
+                },
+                "description": "Caso negativo: se envían fechas duplicadas y debe responder 422."
+            },
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "pm.test(\"Valida error de negocio\", function () {",
+                            "            pm.response.to.have.status(422);",
+                            "        });",
+                            "        const json = pm.response.json();",
+                            "        pm.test(\"Mensaje de validación\", function () {",
+                            "            pm.expect(json.detail.toLowerCase()).to.include('fechas');",
+                            "        });"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pronóstico Predictor Python",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"series_id\": \"{{predictor_series_id}}\",\n  \"horizon_days\": 7\n}"
+                },
+                "url": {
+                    "raw": "{{predictor_url}}/predict",
+                    "host": [
+                        "{{predictor_url}}"
+                    ],
+                    "path": [
+                        "predict"
+                    ]
+                },
+                "description": "Genera un pronóstico de 7 días para la serie previamente entrenada."
+            },
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "pm.test(\"Pronóstico generado\", function () {",
+                            "            pm.response.to.have.status(200);",
+                            "        });",
+                            "        const json = pm.response.json();",
+                            "        pm.test(\"Serie válida\", function () {",
+                            "            pm.expect(json.series_id).to.eql(pm.collectionVariables.get('predictor_series_id'));",
+                            "        });",
+                            "        pm.test(\"Cantidad de predicciones\", function () {",
+                            "            pm.expect(json.predictions.length).to.eql(7);",
+                            "        });",
+                            "        pm.test(\"Predicciones con fecha\", function () {",
+                            "            json.predictions.forEach(function (p) {",
+                            "                pm.expect(p).to.have.property('date');",
+                            "                pm.expect(p).to.have.property('yhat');",
+                            "            });",
+                            "        });"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Pronóstico sin entrenamiento previo",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"series_id\": \"serie-inexistente\",\n  \"horizon_days\": 5\n}"
+                },
+                "url": {
+                    "raw": "{{predictor_url}}/predict",
+                    "host": [
+                        "{{predictor_url}}"
+                    ],
+                    "path": [
+                        "predict"
+                    ]
+                },
+                "description": "Caso negativo: solicitar pronóstico sin haber entrenado previamente."
+            },
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "pm.test(\"Modelo inexistente\", function () {",
+                            "            pm.response.to.have.status(404);",
+                            "        });",
+                            "        const json = pm.response.json();",
+                            "        pm.test(\"Mensaje descriptivo\", function () {",
+                            "            pm.expect(json.detail.toLowerCase()).to.include('no existe');",
+                            "        });"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Listar Personas",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{java_url}}/api/persons",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "persons"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Listar Salas",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{java_url}}/api/rooms",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "rooms"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Listar Articulos",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{java_url}}/api/items",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "items"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Listar Reservas",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{java_url}}/api/reservations",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "reservations"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Crear Persona",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"fullName\": \"Usuarix Demo\",\n  \"email\": \"demo@ucaba.com\",\n  \"role\": \"STAFF\"\n}"
+                },
+                "url": {
+                    "raw": "{{java_url}}/api/persons",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "persons"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Crear Sala",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Sala Demo\",\n  \"capacity\": 8\n}"
+                },
+                "url": {
+                    "raw": "{{java_url}}/api/rooms",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "rooms"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Crear Reserva",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"personId\": 1,\n  \"roomId\": 1,\n  \"startDateTime\": \"2025-09-15T10:00:00\",\n  \"endDateTime\": \"2025-09-15T11:00:00\"\n}"
+                },
+                "url": {
+                    "raw": "{{java_url}}/api/reservations",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "reservations"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Disponibilidad",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{java_url}}/api/reservations/availability?resourceType=ROOM&resourceId=1&start=2025-09-15T10:00:00&end=2025-09-15T11:00:00",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "reservations",
+                        "availability"
+                    ],
+                    "query": [
+                        {
+                            "key": "resourceType",
+                            "value": "ROOM"
+                        },
+                        {
+                            "key": "resourceId",
+                            "value": "1"
+                        },
+                        {
+                            "key": "start",
+                            "value": "2025-09-15T10:00:00"
+                        },
+                        {
+                            "key": "end",
+                            "value": "2025-09-15T11:00:00"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Historial",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{java_url}}/api/reservations/history?resourceType=ROOM&resourceId=1&startDate=2025-07-01&endDate=2025-09-30",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "reservations",
+                        "history"
+                    ],
+                    "query": [
+                        {
+                            "key": "resourceType",
+                            "value": "ROOM"
+                        },
+                        {
+                            "key": "resourceId",
+                            "value": "1"
+                        },
+                        {
+                            "key": "startDate",
+                            "value": "2025-07-01"
+                        },
+                        {
+                            "key": "endDate",
+                            "value": "2025-09-30"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Entrenar Predictor",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"resourceType\": \"ROOM\",\n  \"resourceId\": 1\n}"
+                },
+                "url": {
+                    "raw": "{{java_url}}/api/forecast/train",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "forecast",
+                        "train"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Pronostico",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"resourceType\": \"ROOM\",\n  \"resourceId\": 1,\n  \"horizonDays\": 14\n}"
+                },
+                "url": {
+                    "raw": "{{java_url}}/api/forecast",
+                    "host": [
+                        "{{java_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "forecast"
+                    ]
+                }
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "java_url",
+            "value": "http://localhost:8080"
+        },
+        {
+            "key": "predictor_url",
+            "value": "http://localhost:8000"
+        },
+        {
+            "key": "predictor_series_id",
+            "value": "demo-room-101"
+        }
+    ]
 }
