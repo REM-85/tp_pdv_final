@@ -16,6 +16,46 @@ Este repositorio contiene el backend Java y el microservicio de prediccion en Py
 - Python 3.11 con pip
 - Docker / Docker Compose (opcional para levantar todo junto)
 
+### Guía rápida para equipos con Windows
+
+1. **Instalar dependencias básicas**
+   - [Git for Windows](https://git-scm.com/download/win) (incluye Git Bash para usar los comandos tal como figuran aquí).
+   - [Java 17 JDK](https://adoptium.net/) (Temurin u otra distribución) y agregar `JAVA_HOME`/`bin` al `PATH`.
+   - [Apache Maven 3.9+](https://maven.apache.org/download.cgi); descomprimir y añadir la carpeta `bin` al `PATH`.
+   - [Python 3.11](https://www.python.org/downloads/windows/) marcando la opción **Add python.exe to PATH**.
+   - **Opcional:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) para ejecutar todo con `docker compose`.
+
+2. **Clonar el repositorio** (PowerShell o Git Bash):
+   ```bash
+   git clone https://github.com/<organizacion>/tp_pdv_final.git
+   cd tp_pdv_final
+   ```
+
+3. **Levantar el backend Java**:
+   ```bash
+   cd java-backend
+   mvn clean package
+   java -jar target/reservas-backend-0.0.1-SNAPSHOT.jar
+   ```
+   El servicio queda disponible en `http://localhost:8080` y la consola H2 en `http://localhost:8080/h2-console` (JDBC URL `jdbc:h2:mem:reservas`, usuario `sa`, sin contraseña).
+
+4. **Levantar el predictor Python** (en otra ventana):
+   ```bash
+   cd py-forecast
+   py -3.11 -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+   ```
+   El endpoint queda disponible en `http://localhost:8000/docs` para pruebas rápidas.
+
+5. **O bien ejecutar todo con Docker Desktop**:
+   ```bash
+   cd tp_pdv_final
+   docker compose up --build
+   ```
+   Asegurarse de que Docker Desktop esté corriendo antes de ejecutar el comando.
+
 ## Como correr solo el backend Java
 
 ```bash
