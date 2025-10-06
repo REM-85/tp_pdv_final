@@ -1,29 +1,29 @@
 ﻿# Arquitectura MVP
 
 ```mermaid
-flowchart LR
-    subgraph Cliente
-        UI[UI / Postman]
-    end
-    subgraph Java[Spring Boot API]
-        Controller[REST Controllers]
-        Service[Services]
-        Repo[JPA Repositories]
-        H2[(H2 DB)]
-    end
-    subgraph Python[FastAPI Predictor]
-        FastAPI[FastAPI]
-        Trainer[Selector de modelo]
-        Store[(Modelos .pkl)]
-    end
-    UI -->|HTTP JSON| Controller
-    Controller --> Service
-    Service --> Repo
-    Repo --> H2
-    Service -->|/train /predict| FastAPI
-    FastAPI --> Trainer
-    Trainer --> Store
-```
+ flowchart LR
+     subgraph Cliente
+         UI[UI / Postman]
+     end
+     subgraph Java[Spring Boot API]
+         Controller[REST Controllers]
+         Service[Services]
+         Repo[JPA Repositories]
+         H2[(H2 DB)]
+     end
+     subgraph Python[FastAPI Predictor]
+         FastAPI[FastAPI]
+         Trainer[Selector de modelo]
+         Store[(Modelos .pkl)]
+     end
+     UI -->|HTTP JSON| Controller
+     Controller --> Service
+     Service --> Repo
+     Repo --> H2
+     Service -->|/train /predict| FastAPI
+     FastAPI --> Trainer
+     Trainer --> Store
+ ```
 
 ## Decisiones tecnicas
 
