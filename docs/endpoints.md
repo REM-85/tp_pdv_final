@@ -4,6 +4,8 @@
 
 | Metodo | Camino | Descripcion | Request | Response |
 | --- | --- | --- | --- | --- |
+| POST | `/api/auth/register` | Alta de usuario (rol requerido: ADMIN) | `RegisterRequest` | `201` `AuthResponse` |
+| POST | `/api/auth/login` | Autenticación JWT | `AuthRequest` | `200` `AuthResponse` |
 | GET | `/api/persons` | Listar personas | - | `200` lista `PersonResponse` |
 | POST | `/api/persons` | Crear persona | `PersonRequest` | `201` `PersonResponse` |
 | PUT | `/api/persons/{id}` | Actualizar | `PersonRequest` | `200` `PersonResponse` |
@@ -18,6 +20,7 @@
 | GET | `/api/reservations/history` | Historial para predictor | Query `resourceType`, `resourceId`, `startDate?`, `endDate?` | `200` `HistoryResponse` |
 | POST | `/api/forecast/train` | Exporta historia y solicita entrenamiento | `TrainRequest` | `202` `TrainResponse` |
 | POST | `/api/forecast` | Pide pronostico | `ForecastRequest` | `200` `ForecastResponse` |
+| GET | `/api/forecast/monitor` | Últimas ejecuciones de pronóstico | - | `200` lista `ForecastSnapshotResponse` |
 
 ### Ejemplos
 

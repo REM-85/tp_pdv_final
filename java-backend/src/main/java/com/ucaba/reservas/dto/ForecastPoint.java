@@ -1,5 +1,7 @@
 package com.ucaba.reservas.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 public class ForecastPoint {
@@ -9,7 +11,11 @@ public class ForecastPoint {
     private final Double yhatLower;
     private final Double yhatUpper;
 
-    public ForecastPoint(LocalDate date, double yhat, Double yhatLower, Double yhatUpper) {
+    @JsonCreator
+    public ForecastPoint(@JsonProperty("date") LocalDate date,
+                         @JsonProperty("yhat") double yhat,
+                         @JsonProperty("yhatLower") Double yhatLower,
+                         @JsonProperty("yhatUpper") Double yhatUpper) {
         this.date = date;
         this.yhat = yhat;
         this.yhatLower = yhatLower;

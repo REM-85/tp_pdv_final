@@ -2,11 +2,14 @@ package com.ucaba.reservas.controller;
 
 import com.ucaba.reservas.dto.ForecastRequest;
 import com.ucaba.reservas.dto.ForecastResponse;
+import com.ucaba.reservas.dto.ForecastSnapshotResponse;
 import com.ucaba.reservas.dto.TrainRequest;
 import com.ucaba.reservas.dto.TrainResponse;
 import com.ucaba.reservas.service.ForecastService;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,11 @@ public class ForecastController {
     @PostMapping
     public ForecastResponse forecast(@Valid @RequestBody ForecastRequest request) {
         return forecastService.forecast(request);
+    }
+
+    @GetMapping("/monitor")
+    public List<ForecastSnapshotResponse> monitor() {
+        return forecastService.monitor();
     }
 }
 

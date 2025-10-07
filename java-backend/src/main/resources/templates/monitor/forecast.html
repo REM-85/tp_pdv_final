@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitor de predicción</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: #0f172a; color: #e2e8f0; }
+        header { padding: 1.5rem 2rem; background: #1e293b; display: flex; justify-content: space-between; align-items: center; }
+        a { color: #38bdf8; text-decoration: none; }
+        main { padding: 2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .card { background: rgba(30, 41, 59, 0.85); border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.6); }
+        .card h2 { margin-top: 0; font-size: 1.2rem; color: #f8fafc; }
+        .meta { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 1rem; color: #cbd5f5; }
+        .metrics { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .badge { background: rgba(56, 189, 248, 0.15); padding: 0.4rem 0.75rem; border-radius: 999px; font-size: 0.85rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
+        th, td { padding: 0.4rem 0.3rem; border-bottom: 1px solid rgba(148, 163, 184, 0.2); text-align: left; }
+        th { color: #cbd5f5; font-weight: 600; }
+        .empty { text-align: center; padding: 2rem; border: 2px dashed rgba(148, 163, 184, 0.3); border-radius: 12px; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Monitor de predicción de reservas</h1>
+    <a href="/manual">Volver a gestión manual</a>
+</header>
+<main>
+    <div th:if="${#lists.isEmpty(snapshots)}" class="empty">
+        Aún no se generaron pronósticos. Ejecutá una predicción desde la API para poblar el monitor.
+    </div>
+    <div class="grid" th:if="${!#lists.isEmpty(snapshots)}">
+        <article class="card" th:each="snapshot : ${snapshots}">
+            <h2 th:text="${snapshot.seriesId}"></h2>
+            <div class="meta">
+                <span th:text="'Recurso: ' + ${snapshot.resourceType} + ' #' + ${snapshot.resourceId}"></span>
+                <span th:text="${#temporals.format(snapshot.generatedAt, 'dd/MM/yyyy HH:mm')}"></span>
+            </div>
+            <div class="metrics">
+                <span class="badge" th:each="entry : ${snapshot.metrics.entrySet()}"
+                      th:text="${entry.key} + ': ' + ${#numbers.formatDecimal(entry.value, 1, 3)}"></span>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Pronóstico</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="point : ${snapshot.points}">
+                    <td th:text="${point.date}"></td>
+                    <td th:text="${#numbers.formatDecimal(point.yhat, 1, 1)}"></td>
+                    <td th:text="${point.yhatLower != null ? #numbers.formatDecimal(point.yhatLower, 1, 1) : '-'}"></td>
+                    <td th:text="${point.yhatUpper != null ? #numbers.formatDecimal(point.yhatUpper, 1, 1) : '-'}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
+    </div>
+</main>
+</body>
+</html>
