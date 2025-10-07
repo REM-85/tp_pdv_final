@@ -37,7 +37,7 @@
 <main>
     <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
     <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
-    <div th:if="${#fields.hasErrors('*')}" class="alert error">Revisá los datos del formulario.</div>
+    <!-- Removed global fields.hasErrors('*') check because it throws when no form-bound object is present. Field-level error blocks are used below. -->
     <nav class="tabs">
         <a th:href="@{/manual(tab='rooms')}" th:classappend="${activeTab}=='rooms' ? 'active'" >Salas</a>
         <a th:href="@{/manual(tab='items')}" th:classappend="${activeTab}=='items' ? 'active'" >Recursos móviles</a>

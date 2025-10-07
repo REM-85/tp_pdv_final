@@ -40,6 +40,7 @@ class ReservationServiceTest {
         person.setFullName("Test User");
         person.setEmail("test@ucaba.com");
         person.setRole(UserRole.STAFF);
+        person.setPasswordHash("RAW:Test123!");
         person = personRepository.save(person);
 
         room = new Room();
