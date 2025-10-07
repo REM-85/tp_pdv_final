@@ -30,3 +30,7 @@ reservas:
   forecast:
     default-horizon-days: 14
     max-horizon-days: 60
+security:
+  jwt:
+    secret: VerySecretKeyForJwtDemo2025!1234567890
+    expiration-minutes: 120

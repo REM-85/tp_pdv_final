@@ -102,10 +102,23 @@ Importar `postman/Reserva-Predictor.postman_collection.json` y seguir el flujo:
 5. Entrenar predictor (`POST /api/forecast/train`).
 6. Solicitar pronostico (`POST /api/forecast`).
 
+## Consolas web rápidas
+
+- `/manual` (solo usuarios ADMIN): panel HTML para alta y actualización manual de salas, recursos móviles y reservas.
+- `/monitor/forecast`: tablero de las últimas ejecuciones del predictor con métricas y horizonte proyectado.
+
 ## Datos de ejemplo
 
 - `java-backend/src/main/resources/data.sql`: seed inicial para H2.
 - `py-forecast/data/sample_series.json`: serie sintetica con tendencia + estacionalidad semanal.
+
+### Usuarios precargados (H2)
+
+| Email | Rol | Contraseña |
+| --- | --- | --- |
+| `maria.lopez@organizacion.com` | ADMIN | `AdminSecure1!` |
+| `ana.perez@organizacion.com` | STAFF | `AnaSecure1!` |
+| `juan.gomez@organizacion.com` | STAFF | `JuanSecure1!` |
 
 ## Documentacion
 

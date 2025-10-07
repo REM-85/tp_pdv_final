@@ -2,6 +2,7 @@ package com.ucaba.reservas.service.impl;
 
 import com.ucaba.reservas.dto.PersonRequest;
 import com.ucaba.reservas.dto.PersonResponse;
+import com.ucaba.reservas.exception.BadRequestException;
 import com.ucaba.reservas.exception.ConflictException;
 import com.ucaba.reservas.exception.NotFoundException;
 import com.ucaba.reservas.mapper.PersonMapper;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -47,6 +49,9 @@ public class PersonServiceImpl implements PersonService {
         repository.findByEmail(request.getEmail()).ifPresent(existing -> {
             throw new ConflictException("Email ya registrado");
         });
+        if (!StringUtils.hasText(request.getPassword())) {
+            throw new BadRequestException("La contraseña es obligatoria");
+        }
         try {
             Person person = mapper.toEntity(request);
             return mapper.toResponse(repository.save(person));
@@ -61,6 +66,9 @@ public class PersonServiceImpl implements PersonService {
     public PersonResponse update(Long id, PersonRequest request) {
         Person person = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Persona no encontrada"));
+        if (StringUtils.hasText(request.getPassword()) && request.getPassword().length() < 8) {
+            throw new BadRequestException("La contraseña debe tener al menos 8 caracteres");
+        }
         try {
             mapper.update(person, request);
             return mapper.toResponse(repository.save(person));

@@ -2,10 +2,9 @@ package com.ucaba.reservas.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class PersonRequest {
+public class RegisterRequest {
 
     @NotBlank
     private String fullName;
@@ -14,13 +13,14 @@ public class PersonRequest {
     @Email
     private String email;
 
-    @NotNull
-    private String role;
-
+    @NotBlank
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
 
-    public PersonRequest() {
+    @NotBlank
+    private String role;
+
+    public RegisterRequest() {
     }
 
     public String getFullName() {
@@ -39,19 +39,19 @@ public class PersonRequest {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

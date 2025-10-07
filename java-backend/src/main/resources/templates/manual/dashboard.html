@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión manual de reservas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f6f8; }
+        header { background: #1f3c88; color: #fff; padding: 1rem 2rem; }
+        main { padding: 2rem; }
+        h1 { margin: 0; font-size: 1.6rem; }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .tabs a { text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; color: #1f3c88; background: #e0e7ff; font-weight: bold; }
+        .tabs a.active { background: #1f3c88; color: #fff; }
+        .card { background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        label { display: block; margin-top: 0.8rem; font-weight: bold; }
+        input, select { width: 100%; padding: 0.5rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 0.75rem; border-bottom: 1px solid #e5e7eb; text-align: left; }
+        th { background: #f8fafc; }
+        .actions { display: flex; gap: 0.5rem; }
+        button { padding: 0.5rem 1rem; border: none; border-radius: 4px; background: #1f3c88; color: #fff; cursor: pointer; }
+        button.secondary { background: #64748b; }
+        .alert { padding: 0.75rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
+        .alert.success { background: #ecfdf5; color: #047857; }
+        .alert.error { background: #fef2f2; color: #b91c1c; }
+        .grid { display: grid; gap: 1rem; }
+        .grid.two { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .inline-form { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+        .inline-form input { width: auto; min-width: 120px; }
+        .inline-form button { margin-top: 0; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Gestión manual de recursos y reservas</h1>
+</header>
+<main>
+    <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
+    <div th:if="${#fields.hasErrors('*')}" class="alert error">Revisá los datos del formulario.</div>
+    <nav class="tabs">
+        <a th:href="@{/manual(tab='rooms')}" th:classappend="${activeTab}=='rooms' ? 'active'" >Salas</a>
+        <a th:href="@{/manual(tab='items')}" th:classappend="${activeTab}=='items' ? 'active'" >Recursos móviles</a>
+        <a th:href="@{/manual(tab='reservations')}" th:classappend="${activeTab}=='reservations' ? 'active'" >Reservas</a>
+    </nav>
+
+    <section th:if="${activeTab}=='rooms'">
+        <div class="card">
+            <h2>Nueva sala</h2>
+            <form th:action="@{/manual/rooms}" method="post" th:object="${roomForm}">
+                <label for="roomName">Nombre</label>
+                <input id="roomName" type="text" th:field="*{name}" placeholder="Ej: Sala Norte" required>
+                <div th:if="${#fields.hasErrors('name')}" class="alert error" th:errors="*{name}"></div>
+
+                <label for="roomCapacity">Capacidad</label>
+                <input id="roomCapacity" type="number" min="1" th:field="*{capacity}" placeholder="Ej: 10" required>
+                <div th:if="${#fields.hasErrors('capacity')}" class="alert error" th:errors="*{capacity}"></div>
+
+                <button type="submit">Guardar sala</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Salas existentes</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Capacidad</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.name}"></td>
+                    <td th:text="${room.capacity}"></td>
+                    <td>
+                        <form class="inline-form" th:action="@{/manual/rooms/{id}/update(id=${room.id})}" method="post">
+                            <input type="text" name="name" th:value="${room.name}" required>
+                            <input type="number" name="capacity" min="1" th:value="${room.capacity}" required>
+                            <button type="submit" class="secondary">Actualizar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section th:if="${activeTab}=='items'">
+        <div class="card">
+            <h2>Nuevo recurso móvil</h2>
+            <form th:action="@{/manual/items}" method="post" th:object="${itemForm}">
+                <label for="itemName">Nombre</label>
+                <input id="itemName" type="text" th:field="*{name}" placeholder="Ej: Proyector Epson" required>
+                <div th:if="${#fields.hasErrors('name')}" class="alert error" th:errors="*{name}"></div>
+
+                <label>Disponible</label>
+                <select th:field="*{available}">
+                    <option th:value="true">Sí</option>
+                    <option th:value="false">No</option>
+                </select>
+
+                <button type="submit">Guardar recurso</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Recursos disponibles</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Disponible</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.available} ? 'Sí' : 'No'"></td>
+                    <td>
+                        <form class="inline-form" th:action="@{/manual/items/{id}/update(id=${item.id})}" method="post">
+                            <input type="text" name="name" th:value="${item.name}" required>
+                            <select name="available">
+                                <option th:value="true" th:selected="${item.available}">Sí</option>
+                                <option th:value="false" th:selected="${!item.available}">No</option>
+                            </select>
+                            <button type="submit" class="secondary">Actualizar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section th:if="${activeTab}=='reservations'">
+        <div class="card">
+            <h2>Nueva reserva</h2>
+            <div class="grid two">
+                <form th:action="@{/manual/reservations}" method="post" th:object="${reservationForm}">
+                    <h3>Reserva de sala</h3>
+                    <input type="hidden" th:field="*{itemId}" value="">
+                    <label>Solicitante</label>
+                    <select th:field="*{personId}" required>
+                        <option value="" disabled selected>Seleccioná una persona</option>
+                        <option th:each="person : ${people}" th:value="${person.id}" th:text="${person.fullName}"></option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('personId')}" class="alert error" th:errors="*{personId}"></div>
+
+                    <label>Sala</label>
+                    <select th:field="*{roomId}" required>
+                        <option value="" disabled selected>Seleccioná sala</option>
+                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                    </select>
+
+                    <label>Inicio</label>
+                    <input type="datetime-local" th:field="*{startDateTime}" required>
+                    <div th:if="${#fields.hasErrors('startDateTime')}" class="alert error" th:errors="*{startDateTime}"></div>
+
+                    <label>Fin</label>
+                    <input type="datetime-local" th:field="*{endDateTime}" required>
+                    <div th:if="${#fields.hasErrors('endDateTime')}" class="alert error" th:errors="*{endDateTime}"></div>
+
+                    <button type="submit">Reservar sala</button>
+                </form>
+
+                <form th:action="@{/manual/reservations}" method="post">
+                    <h3>Reserva de recurso móvil</h3>
+                    <input type="hidden" name="roomId" value="">
+                    <label>Solicitante</label>
+                    <select name="personId" required>
+                        <option value="" disabled selected>Seleccioná una persona</option>
+                        <option th:each="person : ${people}" th:value="${person.id}" th:text="${person.fullName}"></option>
+                    </select>
+
+                    <label>Recurso</label>
+                    <select name="itemId" required>
+                        <option value="" disabled selected>Seleccioná recurso</option>
+                        <option th:each="item : ${items}" th:value="${item.id}" th:text="${item.name}"></option>
+                    </select>
+
+                    <label>Inicio</label>
+                    <input type="datetime-local" name="startDateTime" required>
+
+                    <label>Fin</label>
+                    <input type="datetime-local" name="endDateTime" required>
+
+                    <button type="submit">Reservar recurso</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Reservas activas</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Recurso</th>
+                    <th>Solicitante</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="reservation : ${reservations}">
+                    <td>
+                        <span th:text="${reservation.resourceName}"></span>
+                        <small th:text="${reservation.resourceType}"></small>
+                    </td>
+                    <td th:text="${reservation.personName}"></td>
+                    <td th:text="${#temporals.format(reservation.startDateTime, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(reservation.endDateTime, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                        <form class="inline-form" th:action="@{/manual/reservations/{id}/update(id=${reservation.id})}" method="post">
+                            <input type="hidden" name="personId" th:value="${reservation.personId}">
+                            <input type="hidden" name="resourceType" th:value="${reservation.resourceType}">
+                            <input type="hidden" name="resourceId" th:value="${reservation.resourceId}">
+                            <label>Inicio</label>
+                            <input type="datetime-local" name="start" th:value="${#temporals.format(reservation.startDateTime, 'yyyy-MM-dd\'T\'HH:mm')}" required>
+                            <label>Fin</label>
+                            <input type="datetime-local" name="end" th:value="${#temporals.format(reservation.endDateTime, 'yyyy-MM-dd\'T\'HH:mm')}" required>
+                            <button type="submit" class="secondary">Actualizar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

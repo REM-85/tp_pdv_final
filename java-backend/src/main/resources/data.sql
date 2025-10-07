@@ -7,6 +7,7 @@ CREATE TABLE persons (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(32) NOT NULL
 );
 
@@ -34,10 +35,21 @@ CREATE TABLE reservations (
     CONSTRAINT fk_reservation_room FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
 
-INSERT INTO persons (id, full_name, email, role) VALUES
-  (1, 'Ana Perez', 'ana.perez@organizacion.com', 'STAFF'),
-  (2, 'Juan Gomez', 'juan.gomez@organizacion.com', 'STAFF'),
-  (3, 'Maria Lopez', 'maria.lopez@organizacion.com', 'ADMIN');
+CREATE TABLE forecast_snapshots (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    series_id VARCHAR(255) NOT NULL,
+    resource_type VARCHAR(64) NOT NULL,
+    resource_id BIGINT NOT NULL,
+    generated_at TIMESTAMP NOT NULL,
+    horizon_days INT NOT NULL,
+    metrics_json CLOB NOT NULL,
+    points_json CLOB NOT NULL
+);
+
+INSERT INTO persons (id, full_name, email, password_hash, role) VALUES
+  (1, 'Ana Perez', 'ana.perez@organizacion.com', 'RAW:AnaSecure1!', 'STAFF'),
+  (2, 'Juan Gomez', 'juan.gomez@organizacion.com', 'RAW:JuanSecure1!', 'STAFF'),
+  (3, 'Maria Lopez', 'maria.lopez@organizacion.com', 'RAW:AdminSecure1!', 'ADMIN');
 ALTER TABLE persons ALTER COLUMN id RESTART WITH 4;
 
 INSERT INTO items (id, name, available) VALUES
@@ -57,3 +69,5 @@ INSERT INTO reservations (id, item_id, room_id, person_id, start_date_time, end_
   (2, NULL, 2, 2, '2025-09-12T14:00:00', '2025-09-12T16:00:00'),
   (3, 2, NULL, 3, '2025-09-13T09:00:00', '2025-09-13T10:00:00');
 ALTER TABLE reservations ALTER COLUMN id RESTART WITH 4;
+
+ALTER TABLE forecast_snapshots ALTER COLUMN id RESTART WITH 1;
